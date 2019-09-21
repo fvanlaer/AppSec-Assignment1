@@ -67,6 +67,8 @@ bool load_dictionary(const char* dictionary_file, hashmap_t hashtable[])
 
     // Close dictionary file
     fclose(fp);
+    
+    return true;
 }
 
 int check_word(const char* word, hashmap_t hashtable[])
@@ -79,8 +81,5 @@ int check_words(FILE* fp, hashmap_t hashtable[], char* misspelled[])
 
 int main()
 {
-
-printf("Hello World!\n");
-return 0;
 
 }
