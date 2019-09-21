@@ -73,7 +73,7 @@ bool load_dictionary(const char* dictionary_file, hashmap_t hashtable[])
 bool check_word(const char* word, hashmap_t hashtable[])
 {
     int bucket = hash_function(word);
-    hashmap_t* cursor = hashmap[bucket];
+    hashmap_t* cursor = hashtable[bucket];
 
     while(cursor != NULL){
         if(strcmp(word, cursor->word) == 0){
