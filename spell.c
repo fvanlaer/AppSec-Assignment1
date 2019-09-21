@@ -25,7 +25,6 @@ int hash_function(const char* word)
     for (int i = 0; i < word_length; i++){
         sum += word[i];
     }
-
     int bucket = sum % HASH_SIZE;
     return bucket;
 }
@@ -36,7 +35,7 @@ bool load_dictionary(const char* dictionary_file, hashmap_t hashtable[])
     for (int i = 0; i < HASH_SIZE; i++){
         hashtable[i] = NULL;
     }
-
+    
     // Open dictionary file
     FILE* fp = fopen(dictionary_file, "r");
     if (fp == null){
@@ -71,8 +70,18 @@ bool load_dictionary(const char* dictionary_file, hashmap_t hashtable[])
     return true;
 }
 
-int check_word(const char* word, hashmap_t hashtable[])
+bool check_word(const char* word, hashmap_t hashtable[])
 {
+    int bucket = hash_function(word);
+    hashmap_t* cursor = hashmap[bucket];
+
+    while(cursor != NULL){
+        if(strcmp(word, cursor->word) == 0){
+            return true;
+        }
+        cursor = cursor->next;
+    }
+    return false;
 }
 
 int check_words(FILE* fp, hashmap_t hashtable[], char* misspelled[])
