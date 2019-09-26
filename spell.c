@@ -104,8 +104,3 @@ int check_words(FILE* fp, hashmap_t hashtable[], char* misspelled[])
     }
     return num_misspelled;
 }
-
-int main()
-{
-
-}
