@@ -46,7 +46,7 @@ bool load_dictionary(const char* dictionary_file, hashmap_t hashtable[]){
     }
 
     // Variable to temporarily store each word from dictionary
-    char temp[LENGTH];
+    char temp[LENGTH + 1];
 
     // Read each word of dictionary    
     while (fscanf(fp, "%s", temp) == 1){
@@ -106,21 +106,20 @@ bool check_word(const char* word, hashmap_t hashtable[]){
 
 int check_words(FILE* fp, hashmap_t hashtable[], char* misspelled[]){
     int num_misspelled = 0;
-    char temp[LENGTH];
-    char word[LENGTH];
+    char temp[LENGTH + 1];
+    char word[LENGTH + 1];
     int index = 0;
 
     while (fgets(temp, LENGTH, fp) != NULL){
         char* token = strtok(temp, " ");
         while (token != NULL) {
-            //printf("%s\n", token);
             if (ispunct(token[0])){
                 token++;
             }
             if (ispunct(token[strlen(token) - 1])){
                 printf("PUNCTUATION DETECTED!!!\n");
                 token[strlen(token) - 1] = '\0';
-                //printf("%s\n", token);
+                printf("%s\n", token);
             }
             if (check_word(token, hashtable) == false){
                 printf("Misspelled Word: %s Character Count: %d\n", token, strlen(token));
