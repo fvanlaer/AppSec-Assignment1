@@ -104,22 +104,21 @@ bool check_word(const char* word, hashmap_t hashtable[]){
     return false;
 }
 
-//int check_words(FILE* fp, hashmap_t hashtable[], char* misspelled[]){
-//    int num_misspelled = 0;
-//
-//    char temp[LENGTH + 1];
-//    char line[LENGTH + 1];
-//
-//    while (fgets(temp, LENGTH + 1, fp) != NULL){
-//        strcpy(line, temp);
-//        char* word = strtok(line, " ,-;:");
-//        while (word != NULL){
-//            if (check_word(word) == false){
-//                strcat(misspelled, word);
-//                strcat(misspelled, " ");
-//                num_misspelled++;
-//            }
-//        }
-//    }
-//    return num_misspelled;
-//}
+int check_words(FILE* fp, hashmap_t hashtable[], char* misspelled[]){
+    int num_misspelled = 0;
+    char temp[LENGTH + 1];
+    char word[LENGTH + 1];
+    int index = 0;
+
+    while (fgets(temp, LENGTH + 1, fp) != NULL){
+        char* token = strtok(temp, " ");
+        while (token != NULL) {
+            if (check_word(token, hashtable) == false){
+                num_misspelled++;
+            }
+            token = strtok(NULL, " ");
+        }
+
+    }
+    return num_misspelled;
+}
