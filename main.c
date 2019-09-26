@@ -34,7 +34,7 @@ int main(){
 //
 //    printf("\n %d", counter);
 //
-//    bool success = check_word("autHentICated", hashtable);
+//    bool success = check_word("Remember", hashtable);
 //
 //    fputs(success ? "true" : "false", stdout);
 
@@ -46,7 +46,9 @@ int main(){
     int num_misspelled = check_words(fp, hashtable, misspelled);
 
 //    for (int i = 0; i < MAX_MISSPELLED; i++){
-//        printf("%s \n", misspelled[i]);
+//        if (misspelled[i] != NULL) {
+//            printf("%s \n", misspelled[i]);
+//        }
 //    }
 
     printf("%d \n", num_misspelled);
