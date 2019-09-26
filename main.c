@@ -16,7 +16,7 @@ int printList(node* n, int counter){
 
 int main(){
 
-    printf("WELCOME TO OUR SPELL CHECK\n");
+    printf("WELCOME TO SPELL CHECK\n");
 
     int counter = 0;
 
@@ -24,13 +24,17 @@ int main(){
 
     bool dict_read = load_dictionary("C:\\Users\\Francois\\CLionProjects\\Application Security\\AppSec-Assignment1\\wordlist.txt", hashtable);
 
-    fputs(dict_read ? "true" : "false", stdout);
+//    fputs(dict_read ? "true" : "false", stdout);
+//
+//    for (int i = 0 ; i < HASH_SIZE; i++){
+//        counter = printList(hashtable[i], counter);
+//    }
+//
+//    printf("\n %d", counter);
 
-    for (int i = 0 ; i < HASH_SIZE; i++){
-        counter = printList(hashtable[i], counter);
-    }
+    bool success = check_word("autHentICated", hashtable);
 
-    printf("\n %d", counter);
+    fputs(success ? "true" : "false", stdout);
 
     return 0;
 }

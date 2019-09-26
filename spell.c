@@ -23,7 +23,7 @@ typedef node* hashmap_t;
 
 int hash_function(const char* word){
     int sum = 0;
-    int word_length = strlen(word);
+    int word_length = (int) strlen(word);
 
     for (int i = 0; i < word_length; i++){
         sum += word[i];
@@ -51,7 +51,7 @@ bool load_dictionary(const char* dictionary_file, hashmap_t hashtable[]){
     // Read each word of dictionary    
     while (fscanf(fp, "%s", temp) == 1){
         // Create new node
-        node* new_node = malloc(sizeof(node));
+        hashmap_t new_node = malloc(sizeof(node));
         new_node->next = NULL;
         // Copy word from 'temp' to 'new_node'
         strcpy(new_node->word, temp);
@@ -73,19 +73,37 @@ bool load_dictionary(const char* dictionary_file, hashmap_t hashtable[]){
     return true;
 }
 
-//bool check_word(const char* word, hashmap_t hashtable[]){
-//    int bucket = hash_function(word);
-//    hashmap_t* cursor = hashtable[bucket];
-//
-//    while(cursor != NULL){
-//        if(strcmp(word, cursor->word) == 0){
-//            return true;
-//        }
-//        cursor = cursor->next;
-//    }
-//    return false;
-//}
-//
+bool check_word(const char* word, hashmap_t hashtable[]){
+    int bucket = hash_function(word);
+    hashmap_t cursor = hashtable[bucket];
+
+    while(cursor != NULL){
+        if(strcmp(word, cursor->word) == 0){
+            return true;
+        }
+        cursor = cursor->next;
+    }
+    // Lowercase the words
+    char lower_word[strlen(word)];
+    for (int i = 0; i < (int) strlen(word); i++){
+        lower_word[i] = tolower( word[i]);
+    }
+    lower_word[strlen(lower_word)] = '\0';
+
+    // New bucket value for new word
+    bucket = hash_function(lower_word);
+    cursor = hashtable[bucket];
+
+    while(cursor != NULL){
+        if (strcmp(lower_word, cursor->word) == 0){
+            return true;
+        }
+        cursor = cursor->next;
+    }
+
+    return false;
+}
+
 //int check_words(FILE* fp, hashmap_t hashtable[], char* misspelled[]){
 //    int num_misspelled = 0;
 //
