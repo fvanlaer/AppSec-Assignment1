@@ -49,7 +49,7 @@ bool load_dictionary(const char* dictionary_file, hashmap_t hashtable[]){
     char temp[LENGTH + 1];
 
     // Read each word of dictionary    
-    while (fscanf(fp, "%s", temp)==1){
+    while (fscanf(fp, "%s", temp) == 1){
         // Create new node
         node* new_node = malloc(sizeof(node));
         new_node->next = NULL;
