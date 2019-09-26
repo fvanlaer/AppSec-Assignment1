@@ -1,15 +1,7 @@
-# cmake_minimum_required(VERSION <specify CMake version here>)
-project(AppSec_Assignment1)
+cmake_minimum_required(VERSION 3.12.1) #CMake version check
+project(AppSec-Assignment1) #Project Name
+set(CMAKE_CXX_STANDARD 14) #Enable c++14 standard
 
-set(CMAKE_CXX_STANDARD 14)
+set(SOURCE_FILES main.c)
 
-add_executable(AppSec_Assignment1
-        .idea/.gitignore
-        .idea/AppSec-Assignment1.iml
-        .idea/misc.xml
-        .idea/modules.xml
-        .idea/vcs.xml
-        .idea/workspace.xml
-        .travis.yml
-        README.md
-        spell.c)
+add_executable(spell $(SOURCE_FILES))
