@@ -23,7 +23,7 @@ typedef node* hashmap_t;
 
 int hash_function(const char* word){
     int sum = 0;
-    int word_length = (int) strlen(word);
+    int word_length = strlen(word);
 
     for (int i = 0; i < word_length; i++){
         sum += word[i];
@@ -83,13 +83,15 @@ bool check_word(const char* word, hashmap_t hashtable[]){
         }
         cursor = cursor->next;
     }
+    printf("CW1: %s \n", word);
+
     // Lowercase the words
     char lower_word[strlen(word)];
     for (int i = 0; i < (int) strlen(word); i++){
         lower_word[i] = tolower( word[i]);
     }
     lower_word[strlen(lower_word)] = '\0';
-
+    printf("CW2: %s \n", lower_word);
     // New bucket value for new word
     bucket = hash_function(lower_word);
     cursor = hashtable[bucket];
@@ -119,8 +121,9 @@ int check_words(FILE* fp, hashmap_t hashtable[], char* misspelled[]){
             if (ispunct(token[strlen(token) - 1])){
                 printf("PUNCTUATION DETECTED!!!\n");
                 token[strlen(token) - 1] = '\0';
-                printf("%s\n", token);
+                //printf("%s\n", token);
             }
+            //printf("%s\n", token);
             if (check_word(token, hashtable) == false){
                 printf("Misspelled Word: %s Character Count: %d\n", token, strlen(token));
                 misspelled[num_misspelled] = token;
