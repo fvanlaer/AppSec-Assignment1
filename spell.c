@@ -68,7 +68,8 @@ bool load_dictionary(const char* dictionary_file, hashmap_t hashtable[]){
 
     // Close dictionary file
     fclose(fp);
-    
+
+    // The dictionary is loaded into the hashtable
     return true;
 }
 
