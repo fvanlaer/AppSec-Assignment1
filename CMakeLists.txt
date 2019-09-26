@@ -4,4 +4,4 @@ set(CMAKE_CXX_STANDARD 14) #Enable c++14 standard
 
 set(SOURCE_FILES main.c)
 
-add_executable(spell $(SOURCE_FILES))
+add_executable(AppSec-Assignment1 ${SOURCE_FILES})

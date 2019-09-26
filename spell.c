@@ -38,13 +38,13 @@ bool load_dictionary(const char* dictionary_file, hashmap_t hashtable[])
     
     // Open dictionary file
     FILE* fp = fopen(dictionary_file, "r");
-    if (fp == null){
+    if (fp == NULL){
         printf("Unable to load dictionary file\n");
         return false;
     }
 
     // Variable to temporarily store each word from dictionary
-    char temp[LENGHT + 1];
+    char temp[LENGTH + 1];
 
     // Read each word of dictionary    
     while (fscanf(fp, "%s", temp)==1){
@@ -89,12 +89,12 @@ int check_words(FILE* fp, hashmap_t hashtable[], char* misspelled[])
     int num_misspelled = 0;
 
     char temp[LENGTH + 1];
-    char line[LENGHT + 1];
+    char line[LENGTH + 1];
 
     while (fgets(temp, LENGTH + 1, fp) != NULL){
         strcpy(line, temp);
         char* word = strtok(line, " ,-;:");
-        while (word != null){
+        while (word != NULL){
             if (check_word(word) == false){
                 strcat(misspelled, word);
                 strcat(misspelled, " ");
