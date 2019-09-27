@@ -112,26 +112,39 @@ int check_words(FILE* fp, hashmap_t hashtable[], char* misspelled[]){
     char temp[LENGTH];
     char* token;
 
+    // Read file line by line
     while (fgets(temp, LENGTH, fp)){
         token = strtok(temp, " ");
         while (token != NULL) {
-            printf("%s\n", token);
+            // Case with new line
+            if (token[strlen(token) - 1] == '\n') {
+                printf("SPECIAL CASE\n");
+                token[strlen(token) - 1] = 0;
+            }
+            // Punctuation detected at the beginning of "word"
             if (ispunct(token[0])){
                 token++;
             }
+            // Punctuation detected at the end of "word"
             if (ispunct(token[strlen(token) - 1])){
-                //printf("PUNCTUATION DETECTED!!!\n");
                 token[strlen(token) - 1] = 0;
-                //printf("%s\n", token);
             }
-            //printf("%s\n", token);
+            // Comparing the current word to the dictionary hashtable
             if (check_word(token, hashtable) == false){
+                //printf("Num before adding to array: %d\n", num_misspelled);
                 //printf("Misspelled Word: %s Character Count: %d\n", token, strlen(token));
                 misspelled[num_misspelled] = token;
+                //printf("%s \n", misspelled[num_misspelled]);
                 num_misspelled++;
+                //printf("Num after adding to array: %d\n", num_misspelled);
             }
             token = strtok(NULL, " ");
         }
     }
+//    for (int i = 0; i < num_misspelled; i++){
+//            printf("%s \n", misspelled[i]);
+//    }
+
+    printf("%s\n", misspelled[0]);
     return num_misspelled;
 }
