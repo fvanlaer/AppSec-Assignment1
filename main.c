@@ -45,10 +45,8 @@ int main(){
 
     int num_misspelled = check_words(fp, hashtable, misspelled);
 
-//    for (int i = 0; i < MAX_MISSPELLED; i++){
-//        if (misspelled[i] != NULL) {
+//    for (int i = 0; i < 4; i++){
 //            printf("%s \n", misspelled[i]);
-//        }
 //    }
 
     printf("%d \n", num_misspelled);

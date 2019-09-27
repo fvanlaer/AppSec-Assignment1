@@ -21,13 +21,16 @@ node;
 
 typedef node* hashmap_t;
 
-int hash_function(const char* word){
+int hash_function(const char* word)
+{
     int sum = 0;
-    int word_length = strlen(word);
+    int word_length = (int) strlen(word);
 
-    for (int i = 0; i < word_length; i++){
+    for (int i = 0; i < word_length; i++)
+    {
         sum += word[i];
     }
+
     int bucket = sum % HASH_SIZE;
     return bucket;
 }
@@ -46,10 +49,10 @@ bool load_dictionary(const char* dictionary_file, hashmap_t hashtable[]){
     }
 
     // Variable to temporarily store each word from dictionary
-    char temp[LENGTH + 1];
+    char temp[LENGTH];
 
     // Read each word of dictionary    
-    while (fscanf(fp, "%s", temp) == 1){
+    while (fscanf(fp, "%s", temp) > 0){
         // Create new node
         hashmap_t new_node = malloc(sizeof(node));
         new_node->next = NULL;
@@ -83,15 +86,14 @@ bool check_word(const char* word, hashmap_t hashtable[]){
         }
         cursor = cursor->next;
     }
-    printf("CW1: %s \n", word);
 
     // Lowercase the words
     char lower_word[strlen(word)];
     for (int i = 0; i < (int) strlen(word); i++){
         lower_word[i] = tolower( word[i]);
     }
-    lower_word[strlen(lower_word)] = '\0';
-    printf("CW2: %s \n", lower_word);
+    lower_word[strlen(word)] = '\0';
+
     // New bucket value for new word
     bucket = hash_function(lower_word);
     cursor = hashtable[bucket];
@@ -102,36 +104,34 @@ bool check_word(const char* word, hashmap_t hashtable[]){
         }
         cursor = cursor->next;
     }
-
     return false;
 }
 
 int check_words(FILE* fp, hashmap_t hashtable[], char* misspelled[]){
     int num_misspelled = 0;
-    char temp[LENGTH + 1];
-    char word[LENGTH + 1];
-    int index = 0;
+    char temp[LENGTH];
+    char* token;
 
-    while (fgets(temp, LENGTH, fp) != NULL){
-        char* token = strtok(temp, " ");
+    while (fgets(temp, LENGTH, fp)){
+        token = strtok(temp, " ");
         while (token != NULL) {
+            printf("%s\n", token);
             if (ispunct(token[0])){
                 token++;
             }
             if (ispunct(token[strlen(token) - 1])){
-                printf("PUNCTUATION DETECTED!!!\n");
-                token[strlen(token) - 1] = '\0';
+                //printf("PUNCTUATION DETECTED!!!\n");
+                token[strlen(token) - 1] = 0;
                 //printf("%s\n", token);
             }
             //printf("%s\n", token);
             if (check_word(token, hashtable) == false){
-                printf("Misspelled Word: %s Character Count: %d\n", token, strlen(token));
+                //printf("Misspelled Word: %s Character Count: %d\n", token, strlen(token));
                 misspelled[num_misspelled] = token;
                 num_misspelled++;
             }
             token = strtok(NULL, " ");
         }
-
     }
     return num_misspelled;
 }
