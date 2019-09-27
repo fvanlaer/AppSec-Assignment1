@@ -18,9 +18,11 @@ int main(){
 
     printf("WELCOME TO SPELL CHECK\n");
 
-    int counter = 0;
+//    int counter = 0;
 
     hashmap_t hashtable[HASH_SIZE];
+
+    char* misspelled[MAX_MISSPELLED];
 
     bool dict_read = load_dictionary("C:\\Users\\Francois\\CLionProjects\\Application Security\\AppSec-Assignment1\\wordlist.txt", hashtable);
 
@@ -31,10 +33,21 @@ int main(){
 //    }
 //
 //    printf("\n %d", counter);
+//
+//    bool success = check_word("Remember", hashtable);
+//
+//    fputs(success ? "true" : "false", stdout);
 
-    bool success = check_word("autHentICated", hashtable);
+    FILE* fp = fopen("C:\\Users\\Francois\\CLionProjects\\Application Security\\AppSec-Assignment1\\test1.txt", "r");
+    if (fp == NULL){
+        printf("Unable to load text file\n");
+    }
 
-    fputs(success ? "true" : "false", stdout);
+    int num_misspelled = check_words(fp, hashtable, misspelled);
+
+    printf("%d \n", num_misspelled);
+
+    fclose(fp);
 
     return 0;
 }

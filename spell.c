@@ -21,13 +21,16 @@ node;
 
 typedef node* hashmap_t;
 
-int hash_function(const char* word){
+int hash_function(const char* word)
+{
     int sum = 0;
     int word_length = (int) strlen(word);
 
-    for (int i = 0; i < word_length; i++){
+    for (int i = 0; i < word_length; i++)
+    {
         sum += word[i];
     }
+
     int bucket = sum % HASH_SIZE;
     return bucket;
 }
@@ -49,7 +52,7 @@ bool load_dictionary(const char* dictionary_file, hashmap_t hashtable[]){
     char temp[LENGTH + 1];
 
     // Read each word of dictionary    
-    while (fscanf(fp, "%s", temp) == 1){
+    while (fscanf(fp, "%s", temp) > 0){
         // Create new node
         hashmap_t new_node = malloc(sizeof(node));
         new_node->next = NULL;
@@ -83,12 +86,13 @@ bool check_word(const char* word, hashmap_t hashtable[]){
         }
         cursor = cursor->next;
     }
+
     // Lowercase the words
     char lower_word[strlen(word)];
     for (int i = 0; i < (int) strlen(word); i++){
         lower_word[i] = tolower( word[i]);
     }
-    lower_word[strlen(lower_word)] = '\0';
+    lower_word[strlen(word)] = '\0';
 
     // New bucket value for new word
     bucket = hash_function(lower_word);
@@ -100,26 +104,45 @@ bool check_word(const char* word, hashmap_t hashtable[]){
         }
         cursor = cursor->next;
     }
-
     return false;
 }
 
-//int check_words(FILE* fp, hashmap_t hashtable[], char* misspelled[]){
-//    int num_misspelled = 0;
-//
-//    char temp[LENGTH + 1];
-//    char line[LENGTH + 1];
-//
-//    while (fgets(temp, LENGTH + 1, fp) != NULL){
-//        strcpy(line, temp);
-//        char* word = strtok(line, " ,-;:");
-//        while (word != NULL){
-//            if (check_word(word) == false){
-//                strcat(misspelled, word);
-//                strcat(misspelled, " ");
-//                num_misspelled++;
-//            }
-//        }
-//    }
-//    return num_misspelled;
-//}
+int check_words(FILE* fp, hashmap_t hashtable[], char* misspelled[]){
+    int num_misspelled = 0;
+    char* token;
+
+    // Search the end of file and calculate total number of characters
+    fseek(fp, 0L, SEEK_END);
+    long file_size = ftell(fp);
+    // Reset file pointer
+    fseek(fp, 0L, SEEK_SET);
+
+    // Buffer to store file
+    char temp[file_size + 1];
+
+    // Reading file
+    while (fgets(temp, (int) file_size + 1, fp)){
+        token = strtok(temp, " ");
+        while (token != NULL) {
+            // Case with new line
+            if (token[strlen(token) - 1] == '\n') {
+                token[strlen(token) - 1] = 0;
+            }
+            // Punctuation detected at the beginning of "word"
+            if (ispunct(token[0])){
+                token++;
+            }
+            // Punctuation detected at the end of "word"
+            if (ispunct(token[strlen(token) - 1])){
+                token[strlen(token) - 1] = 0;
+            }
+            // Comparing the current word to the dictionary hashtable
+            if (check_word(token, hashtable) == false){
+                misspelled[num_misspelled] = token;
+                num_misspelled++;
+            }
+            token = strtok(NULL, " ");
+        }
+    }
+    return num_misspelled;
+}
