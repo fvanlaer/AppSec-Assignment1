@@ -47,5 +47,7 @@ int main(){
 
     printf("%d \n", num_misspelled);
 
+    fclose(fp);
+
     return 0;
 }

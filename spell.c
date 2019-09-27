@@ -109,11 +109,19 @@ bool check_word(const char* word, hashmap_t hashtable[]){
 
 int check_words(FILE* fp, hashmap_t hashtable[], char* misspelled[]){
     int num_misspelled = 0;
-    char temp[107];
     char* token;
 
-    // Read file
-    while (fgets(temp, 107, fp)){
+    // Search the end of file and calculate total number of characters
+    fseek(fp, 0L, SEEK_END);
+    long file_size = ftell(fp);
+    // Reset file pointer
+    fseek(fp, 0L, SEEK_SET);
+
+    // Buffer to store file
+    char temp[file_size + 1];
+
+    // Reading file
+    while (fgets(temp, (int) file_size + 1, fp)){
         token = strtok(temp, " ");
         while (token != NULL) {
             // Case with new line
@@ -130,20 +138,11 @@ int check_words(FILE* fp, hashmap_t hashtable[], char* misspelled[]){
             }
             // Comparing the current word to the dictionary hashtable
             if (check_word(token, hashtable) == false){
-                //printf("Num before adding to array: %d\n", num_misspelled);
-                //printf("Misspelled Word: %s Character Count: %d\n", token, strlen(token));
                 misspelled[num_misspelled] = token;
-                printf("%s \n", misspelled[num_misspelled]);
                 num_misspelled++;
-                printf("Num after adding to array: %d\n", num_misspelled);
             }
             token = strtok(NULL, " ");
         }
     }
-    for (int i = 0; i < num_misspelled; i++){
-            printf("%s \n", misspelled[i]);
-    }
-
-    //printf("%s\n", misspelled[0]);
     return num_misspelled;
 }
