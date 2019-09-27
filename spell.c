@@ -49,7 +49,7 @@ bool load_dictionary(const char* dictionary_file, hashmap_t hashtable[]){
     }
 
     // Variable to temporarily store each word from dictionary
-    char temp[LENGTH];
+    char temp[LENGTH + 1];
 
     // Read each word of dictionary    
     while (fscanf(fp, "%s", temp) > 0){
@@ -109,16 +109,15 @@ bool check_word(const char* word, hashmap_t hashtable[]){
 
 int check_words(FILE* fp, hashmap_t hashtable[], char* misspelled[]){
     int num_misspelled = 0;
-    char temp[LENGTH];
+    char temp[107];
     char* token;
 
-    // Read file line by line
-    while (fgets(temp, LENGTH, fp)){
+    // Read file
+    while (fgets(temp, 107, fp)){
         token = strtok(temp, " ");
         while (token != NULL) {
             // Case with new line
             if (token[strlen(token) - 1] == '\n') {
-                printf("SPECIAL CASE\n");
                 token[strlen(token) - 1] = 0;
             }
             // Punctuation detected at the beginning of "word"
@@ -134,17 +133,17 @@ int check_words(FILE* fp, hashmap_t hashtable[], char* misspelled[]){
                 //printf("Num before adding to array: %d\n", num_misspelled);
                 //printf("Misspelled Word: %s Character Count: %d\n", token, strlen(token));
                 misspelled[num_misspelled] = token;
-                //printf("%s \n", misspelled[num_misspelled]);
+                printf("%s \n", misspelled[num_misspelled]);
                 num_misspelled++;
-                //printf("Num after adding to array: %d\n", num_misspelled);
+                printf("Num after adding to array: %d\n", num_misspelled);
             }
             token = strtok(NULL, " ");
         }
     }
-//    for (int i = 0; i < num_misspelled; i++){
-//            printf("%s \n", misspelled[i]);
-//    }
+    for (int i = 0; i < num_misspelled; i++){
+            printf("%s \n", misspelled[i]);
+    }
 
-    printf("%s\n", misspelled[0]);
+    //printf("%s\n", misspelled[0]);
     return num_misspelled;
 }
