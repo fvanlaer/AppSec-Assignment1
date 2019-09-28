@@ -27,7 +27,7 @@ int main(){
     printf("FIRST TEST:\n");
     printf("Loading dictionary file...\n");
 
-    bool dict_read = load_dictionary("C:\\Users\\Francois\\CLionProjects\\Application Security\\AppSec-Assignment1\\wordlist.txt", hashtable);
+    bool dict_read = load_dictionary("wordlist.txt", hashtable);
 
     if (dict_read == true){
         printf("The dictionary was properly loaded.\n");
@@ -59,7 +59,7 @@ int main(){
     printf("THIRD TEST\n");
     printf("Checking spelling in specific file...\n");
 
-    FILE* fp = fopen("C:\\Users\\Francois\\CLionProjects\\Application Security\\AppSec-Assignment1\\test1.txt", "r");
+    FILE* fp = fopen("test1.txt", "r");
     if (fp == NULL){
         printf("Unable to load text file\n");
     }
