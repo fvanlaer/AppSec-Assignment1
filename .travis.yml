@@ -1,2 +1,9 @@
 language: c
-compiler : gcc
+compiler :
+  - clang
+  - gcc
+sudo: false
+script:
+  - gcc -coverage -O0 test_main.c -o spell_test
+  - ./spell_test
+  - gcov test_main.c
