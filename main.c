@@ -49,7 +49,10 @@ int main(){
 
     fclose(fp);
 
-    free_memory(hashtable);
+    bool success = free_memory(hashtable);
+    if (success == true){
+        printf("All the allocated memory was properly freed. The operation is a SUCCESS!\n");
+    }
 
     return 0;
 }
