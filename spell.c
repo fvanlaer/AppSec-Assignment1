@@ -158,3 +158,15 @@ int check_words(FILE* fp, hashmap_t hashtable[], char* misspelled[]){
     }
     return num_misspelled;
 }
+
+bool free_memory(hashmap_t hashtable[]){
+    for (int i = 0; i < HASH_SIZE; i++){
+        node* cursor = hashtable[i];
+        while (cursor != NULL){
+            node* temp = cursor;
+            cursor = cursor->next;
+            free(temp);
+        }
+    }
+    return true;
+}
