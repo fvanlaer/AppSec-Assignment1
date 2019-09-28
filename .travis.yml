@@ -2,8 +2,9 @@ language: c
 compiler :
   - clang
   - gcc
-sudo: false
+sudo: true
+install: sudo apt-get install check
 script:
   - gcc -coverage -O0 test_main.c -o spell_test
   - ./spell_test
-  - gcov test_main.c
+  - gcov spell_test.c
