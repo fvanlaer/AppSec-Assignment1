@@ -5,6 +5,8 @@ compiler :
 sudo: true
 install: sudo apt-get install check
 script:
+  - cmake CMakeLists.txt
+  - cmake --build .
   - gcc -coverage -O0 test_main.c -o spell_test
   - ./spell_test
   - gcov spell_test.c
