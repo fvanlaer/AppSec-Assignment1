@@ -9,6 +9,6 @@ before_script:
   - cmake CMakeLists.txt
   - cmake .
 script:
-  - gcc -coverage -O0 test_main.c -o spell_test
+  - gcc -g test_main.c -o spell_test `pkg-config --cflags --libs check`
   - ./spell_test
   - gcov spell_test.c
