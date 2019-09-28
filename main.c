@@ -49,5 +49,7 @@ int main(){
 
     fclose(fp);
 
+    free_memory(hashtable);
+
     return 0;
 }

@@ -77,6 +77,18 @@ bool load_dictionary(const char* dictionary_file, hashmap_t hashtable[]){
 }
 
 bool check_word(const char* word, hashmap_t hashtable[]){
+
+    // Check whether the "word" is all digit
+    bool all_digits = true;
+    for (int i = 0; i < strlen(word); i++){
+        if (!isdigit(word[i])){
+            all_digits = false;
+        }
+    }
+    if (all_digits == true){
+        return true;
+    }
+
     int bucket = hash_function(word);
     hashmap_t cursor = hashtable[bucket];
 
@@ -145,4 +157,16 @@ int check_words(FILE* fp, hashmap_t hashtable[], char* misspelled[]){
         }
     }
     return num_misspelled;
+}
+
+bool free_memory(hashmap_t hashtable[]){
+    for (int i = 0; i < HASH_SIZE; i++){
+        node* cursor = hashtable[i];
+        while (cursor != NULL){
+            node* temp = cursor;
+            cursor = cursor->next;
+            free(temp);
+        }
+    }
+    return true;
 }
