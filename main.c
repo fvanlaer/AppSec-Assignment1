@@ -34,9 +34,10 @@ int main(){
 //
 //    printf("\n %d", counter);
 //
-//    bool success = check_word("Remember", hashtable);
-//
-//    fputs(success ? "true" : "false", stdout);
+    bool is_word = check_word("1234", hashtable);
+
+    fputs(is_word ? "true" : "false", stdout);
+    printf("\n");
 
     FILE* fp = fopen("C:\\Users\\Francois\\CLionProjects\\Application Security\\AppSec-Assignment1\\test1.txt", "r");
     if (fp == NULL){
@@ -49,7 +50,10 @@ int main(){
 
     fclose(fp);
 
-    free_memory(hashtable);
+    bool success = free_memory(hashtable);
+    if (success == true){
+        printf("All the allocated memory was properly freed. The operation is a SUCCESS!\n");
+    }
 
     return 0;
 }
