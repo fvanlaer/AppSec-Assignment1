@@ -12,3 +12,6 @@ script:
   - gcc -coverage -O0 -g test_main.c -o spell_test `pkg-config --cflags --libs check`
   - ./spell_test
   - gcov -b test_main.c
+  - gcc -coverage -O0 -g main.c -o spell_main `pkg-config --cflags --libs check`
+  - ./spell_main
+  - gcov -b main.c
