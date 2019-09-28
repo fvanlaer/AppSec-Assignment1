@@ -24,9 +24,18 @@ int main(){
 
     char* misspelled[MAX_MISSPELLED];
 
+    printf("FIRST TEST:\n");
+    printf("Loading dictionary file...\n");
+
     bool dict_read = load_dictionary("C:\\Users\\Francois\\CLionProjects\\Application Security\\AppSec-Assignment1\\wordlist.txt", hashtable);
 
-//    fputs(dict_read ? "true" : "false", stdout);
+    if (dict_read == true){
+        printf("The dictionary was properly loaded.\n");
+    }
+    else{
+        printf("ERROR! The program will terminate now.\n");
+        return 0;
+    }
 //
 //    for (int i = 0 ; i < HASH_SIZE; i++){
 //        counter = printList(hashtable[i], counter);
@@ -34,10 +43,21 @@ int main(){
 //
 //    printf("\n %d", counter);
 //
+    printf("SECOND TEST\n");
+    printf("Checking specific word...\n");
+
     bool is_word = check_word("1234", hashtable);
 
-    fputs(is_word ? "true" : "false", stdout);
-    printf("\n");
+    if (is_word == true){
+        printf("The selected word is spelled correctly.\n");
+    }
+
+    else{
+        printf("This word is not spelled correctly.\n");
+    }
+
+    printf("THIRD TEST\n");
+    printf("Checking spelling in specific file...\n");
 
     FILE* fp = fopen("C:\\Users\\Francois\\CLionProjects\\Application Security\\AppSec-Assignment1\\test1.txt", "r");
     if (fp == NULL){
@@ -46,13 +66,19 @@ int main(){
 
     int num_misspelled = check_words(fp, hashtable, misspelled);
 
-    printf("%d \n", num_misspelled);
+    printf("There are %d misspelled words in the selected file.\n", num_misspelled);
 
     fclose(fp);
+
+    printf("END OF PROGRAM\n");
+    printf("Freeing allocated memory...\n");
 
     bool success = free_memory(hashtable);
     if (success == true){
         printf("All the allocated memory was properly freed. The operation is a SUCCESS!\n");
+    }
+    else{
+        printf("ERROR! The allocated memory could not be freed.\n");
     }
 
     return 0;
