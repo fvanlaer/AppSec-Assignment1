@@ -122,6 +122,7 @@ bool check_word(const char* word, hashmap_t hashtable[]){
 int check_words(FILE* fp, hashmap_t hashtable[], char* misspelled[]){
     int num_misspelled = 0;
     char* token;
+    char* misspelled_temp[MAX_MISSPELLED];
 
     // Search the end of file and calculate total number of characters
     fseek(fp, 0L, SEEK_END);
@@ -150,15 +151,20 @@ int check_words(FILE* fp, hashmap_t hashtable[], char* misspelled[]){
             }
             // Comparing the current word to the dictionary hashtable
             if (check_word(token, hashtable) == false){
-                misspelled[num_misspelled] = token;
+                misspelled_temp[num_misspelled] = token;
                 num_misspelled++;
             }
             token = strtok(NULL, " ");
         }
     }
+    for (int i = 0; i < num_misspelled; i++) {
+        misspelled[i] = misspelled_temp[i];
+    }
+
     return num_misspelled;
 }
 
+// We need to free the memory allocated to the hashmap
 bool free_memory(hashmap_t hashtable[]){
     for (int i = 0; i < HASH_SIZE; i++){
         node* pointer = hashtable[i];
