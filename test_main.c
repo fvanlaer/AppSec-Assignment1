@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include "spell.c"
 
-#define DICTIONARY "C:\\Users\\Francois\\CLionProjects\\Application Security\\AppSec-Assignment1\\wordlist.txt"
-#define TESTDICT "C:\\Users\\Francois\\CLionProjects\\Application Security\\AppSec-Assignment1\\test_wordlist.txt"
+#define DICTIONARY "wordlist.txt"
+#define TESTDICT "test_wordlist.txt"
 
 START_TEST(test_dictionary_normal)
 {
@@ -36,7 +36,7 @@ START_TEST(test_check_words_normal)
     expected[1] = "skyn";
     expected[2] = "betta";
     char *misspelled[MAX_MISSPELLED];
-    FILE *fp = fopen("C:\\Users\\Francois\\CLionProjects\\Application Security\\AppSec-Assignment1\\test1.txt", "r");
+    FILE *fp = fopen("test1.txt", "r");
     int num_misspelled = check_words(fp, hashtable, misspelled);
     ck_assert(num_misspelled == 3);
     bool test = strlen(misspelled[0]) == strlen(expected[0]);
