@@ -4,9 +4,12 @@ compiler :
   - gcc
 sudo: true
 install: sudo apt-get install check
-script:
+before_script:
+  - cmake --version
   - cmake CMakeLists.txt
-  - cmake --build .
+  - cmake .
+script:
+  - make
   - gcc -coverage -O0 test_main.c -o spell_test
   - ./spell_test
   - gcov spell_test.c
