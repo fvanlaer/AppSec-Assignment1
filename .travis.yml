@@ -11,4 +11,4 @@ before_script:
 script:
   - gcc -coverage -O0 -g test_main.c -o spell_test `pkg-config --cflags --libs check`
   - ./spell_test
-  - gcov spell_test.c
+  - gcov test_main.c
