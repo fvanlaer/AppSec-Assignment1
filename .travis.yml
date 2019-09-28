@@ -9,7 +9,6 @@ before_script:
   - cmake CMakeLists.txt
   - cmake .
 script:
-  - make
   - gcc -coverage -O0 test_main.c -o spell_test
   - ./spell_test
   - gcov spell_test.c
