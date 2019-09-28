@@ -14,11 +14,16 @@ int printList(node* n, int counter){
     return counter;
 }
 
-int main(){
+int main(int argc, char* argv[]){
 
     printf("WELCOME TO SPELL CHECK\n");
 
 //    int counter = 0;
+
+    if (argc < 3 || argc > 4){
+        printf("Please only enter 3 arguments only, example: ./spell_check a_tale_of_two_cities.txt wordlist.txt\n");
+        return 0;
+    }
 
     hashmap_t hashtable[HASH_SIZE];
 
@@ -27,7 +32,8 @@ int main(){
     printf("FIRST TEST:\n");
     printf("Loading dictionary file...\n");
 
-    bool dict_read = load_dictionary("wordlist.txt", hashtable);
+//    bool dict_read = load_dictionary("wordlist.txt", hashtable);
+    bool dict_read = load_dictionary(argv[2], hashtable);
 
     if (dict_read == true){
         printf("The dictionary was properly loaded.\n");
@@ -59,7 +65,9 @@ int main(){
     printf("THIRD TEST\n");
     printf("Checking spelling in specific file...\n");
 
-    FILE* fp = fopen("test1.txt", "r");
+//    FILE* fp = fopen("test1.txt", "r");
+    FILE* fp = fopen(argv[1], "r");
+
     if (fp == NULL){
         printf("Unable to load text file\n");
     }
